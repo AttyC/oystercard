@@ -1,10 +1,11 @@
 require 'oystercard'
 
 describe 'check balance' do
-  card = Oystercard.new
+  oystercard = Oystercard.new
   it 'checks the card status' do
-    card.touch_in
-    card.touch_out
-    expect(card).to_not be_in_journey
+    oystercard.top_up(20)
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard).to_not be_in_journey
   end
 end
