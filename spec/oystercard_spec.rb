@@ -7,4 +7,11 @@ describe Oystercard do
       expect(oystercard.balance).to eq 0
     end
   end
+
+  describe '#top_up' do
+    it 'tops up the card' do
+      amount = 14
+      expect{ oystercard.top_up(amount) }.to change{ oystercard.balance }.by(amount)
+    end
+  end
 end
