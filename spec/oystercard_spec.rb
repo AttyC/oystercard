@@ -37,13 +37,6 @@ describe Oystercard do
     end
   end
 
-  describe '#deduct' do
-    it 'deducts fare from the card' do
-      amount = 3.50
-      expect { oystercard.deduct(amount) }.to change{ oystercard.balance }.by(-amount)
-    end
-  end
-
   describe '#in_journey?' do
     it 'initially not in a journey' do
       expect(oystercard).not_to be_in_journey
@@ -51,11 +44,19 @@ describe Oystercard do
   end
 
   describe '#touch_out' do
-    it 'has touched out' do
+    before do
       oystercard.top_up(20)
       oystercard.touch_in
-      oystercard.touch_out
+    end
+    it 'has touched out' do
+      fare = Oystercard::MINIMUM_BALANCE
+      oystercard.touch_out fare
       expect(oystercard).to_not be_in_journey
+    end
+
+    it 'deducts the fare on touch out' do
+      fare = Oystercard::MINIMUM_BALANCE
+      expect { oystercard.touch_out fare }.to change{ oystercard.balance }.by(-fare)
     end
   end
 end
