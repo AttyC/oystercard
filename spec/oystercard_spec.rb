@@ -31,8 +31,8 @@ describe Oystercard do
       end
 
       it 'has a minimum balance' do
-        minimum_balance = Oystercard::MINIMUM_BALANCE
-        expect{ oystercard.touch_in }.to raise_error "Minimum balance is £#{minimum_balance}"
+        MINIMUM_FARE = Oystercard::MINIMUM_FARE
+        expect{ oystercard.touch_in }.to raise_error "Minimum fare is £#{MINIMUM_FARE}"
       end
     end
   end
@@ -49,13 +49,13 @@ describe Oystercard do
       oystercard.touch_in
     end
     it 'has touched out' do
-      fare = Oystercard::MINIMUM_BALANCE
+      fare = Oystercard::MINIMUM_FARE
       oystercard.touch_out fare
       expect(oystercard).to_not be_in_journey
     end
 
     it 'deducts the fare on touch out' do
-      fare = Oystercard::MINIMUM_BALANCE
+      fare = Oystercard::MINIMUM_FARE
       expect { oystercard.touch_out fare }.to change{ oystercard.balance }.by(-fare)
     end
   end
